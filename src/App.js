@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  state = {
+    listings: [],
+  }
+
+  componentDidMount(){
+    fetch('/listing')
+      .then(response => response.json())
+      .then(listings => this.setState({ listings }))
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <ul>
+          {this.state.listings.map(listing => (
+            <li className='listing' key={listing.id}>
+              <img alt='' src={listing.images[0]} />
+              <div>
+                <span className='date'>
+                  {(new Date(listing.createdAt))
+                    .toString().slice(4, 10).replace(' 0', ' ')
+                  }
+                </span>
+                <a href="#">{listing.title}</a>
+                <div className='price'>
+                  <span>${listing.price}</span>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
 }
 
 export default App;
