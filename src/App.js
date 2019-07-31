@@ -1,39 +1,15 @@
 import React from 'react';
 import './App.css';
 
+import MakeListing from './MakeListing';
+import Listings from './Listings';
+
 class App extends React.Component {
-
-  state = {
-    listings: [],
-  }
-
-  componentDidMount(){
-    fetch('/listing')
-      .then(response => response.json())
-      .then(listings => this.setState({ listings }))
-  }
-
   render() {
     return (
       <div className="App">
-        <ul>
-          {this.state.listings.map(listing => (
-            <li className='listing' key={listing.id}>
-              <img alt='' src={listing.images[0]} />
-              <div>
-                <span className='date'>
-                  {(new Date(listing.createdAt))
-                    .toString().slice(4, 10).replace(' 0', ' ')
-                  }
-                </span>
-                <a href="#">{listing.title}</a>
-                <div className='price'>
-                  <span>${listing.price}</span>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <Listings />
+        <MakeListing />
       </div>
     );
   }

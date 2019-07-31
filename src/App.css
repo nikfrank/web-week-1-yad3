@@ -1,3 +1,11 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100vh;
+}
+
 ul {
   list-style: none;
 }
@@ -36,4 +44,37 @@ ul {
   padding: 3px;
   font-size: 0.75rem;
   font-weight: lighter;
+}
+
+
+.MakeListing {
+  height: 40vh;
+  width: 100vw;
+  background-color: #ccc;
+  border-top: 2px dashed black;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.MakeListing label {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.MakeListing label span {
+  width: 180px;
+}
+
+.MakeListing textarea {
+  resize: none;
+  height: 70px;
+  width: 250px;
+}
+
+.MakeListing input {
+  width: 250px;
 }
