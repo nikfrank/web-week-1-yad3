@@ -89,7 +89,7 @@ app.get('/hydrate', (req, res)=> {
 });
 
 app.post('/listing', auth, (req, res)=> {
-  Listing.create({ ...req.body, id: req.session.id })
+  Listing.create({ ...req.body, author: req.session.id })
     .then((response)=>
       res.status(201).json({
         message: 'created',
