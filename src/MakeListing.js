@@ -7,6 +7,7 @@ class MakeListing extends React.Component {
     description: '',
     price: 0,
     images: [],
+    showWaitingGif: false,
   }
 
   setTitle = e => this.setState({ title: e.target.value })
@@ -32,9 +33,36 @@ class MakeListing extends React.Component {
     ],
   })
 
+  submit = ()=> {
+    this.setState({
+      showWaitingGif: true,
+    });
+
+    fetch('/listing', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        title: this.state.title,
+        description: this.state.description,
+        price: this.state.price,
+        images: this.state.images,
+      })
+    }).then(response=> response.json())
+      .then(responseJson=> {
+        setTimeout(()=> this.setState({
+          showWaitingGif: false,
+          title: '',
+          description: '',
+          price: 0,
+          images: [],
+        }, ()=> this.props.triggerReload()), 2000);
+      });
+  }
+
   render(){
     return (
-      <div className='MakeListing'>
+      <div className={'MakeListing '+(this.state.showWaitingGif ? 'waiting' : '')}>
+        <img src='https://media1.giphy.com/media/12kGB0hjXATilW/giphy.gif' />
         <label>
           <span>Title</span>
           <input value={this.state.title} onChange={this.setTitle} />

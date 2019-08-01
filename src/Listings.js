@@ -2,21 +2,11 @@ import React from 'react';
 
 class Listings extends React.Component {
 
-  state = {
-    listings: [],
-  }
-
-  componentDidMount(){
-    fetch('/listing')
-      .then(response => response.json())
-      .then(listings => this.setState({ listings }))
-  }
-
   render(){
     return (
       <div className='Listings'>
         <ul>
-          {this.state.listings.map(listing => (
+          {this.props.listings.map(listing => (
             <li className='listing' key={listing.id}>
               <img alt='' src={listing.images[0]} />
               <div>

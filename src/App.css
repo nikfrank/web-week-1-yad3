@@ -10,6 +10,11 @@ ul {
   list-style: none;
 }
 
+.Listings {
+  height: 60vh;
+  overflow-y: auto;
+}
+
 .listing {
   display: flex;
   padding: 10px;
@@ -48,7 +53,7 @@ ul {
 
 
 .MakeListing {
-  height: 40vh;
+  height: calc(40vh - 2px);
   width: 100vw;
   background-color: #ccc;
   border-top: 2px dashed black;
@@ -77,4 +82,22 @@ ul {
 
 .MakeListing input {
   width: 250px;
+}
+
+.MakeListing.waiting img {
+  display: initial;
+}
+
+.MakeListing.waiting label,
+.MakeListing.waiting button {
+  display: none;
+}
+
+.MakeListing:not(.waiting) img {
+  display: none;
+}
+
+.MakeListing:not(.waiting) label,
+.MakeListing:not(.waiting) button {
+  display: flex;
 }
