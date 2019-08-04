@@ -27,7 +27,7 @@ class App extends React.Component {
       <div className='App'>
         <Listings listings={this.state.listings} />
         {this.state.token ? (
-          <MakeListing triggerReload={this.reload} />
+          <MakeListing triggerReload={this.reload} token={this.state.token}/>
         ) : (
           <Login onLogin={this.setToken} />
         )}
