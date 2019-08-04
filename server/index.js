@@ -2,13 +2,16 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 
-const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+
+const fakeData = require('./fakeData');
 
 const connectionString = 'postgres://yad3:guest@localhost:5432/yad3';
 
 const ORM = require('sequelize');
 const connection = new ORM(connectionString, { logging: false });
+
+const calculateHash = require('./hash');
 
 // Models
 const Listing = connection.define('listing', {
@@ -80,7 +83,9 @@ connection.authenticate()
 
 app.get('/hydrate', (req, res)=> {
   User.sync({ force: true })
+      .then(()=> User.bulkCreate(fakeData.users))
       .then(()=> Listing.sync({ force: true }))
+      .then(()=> Listing.bulkCreate(fakeData.listings))
       .then(()=> res.json({ message: 'successfully created tables' }))
       .catch(err=> {
         console.error(err);
@@ -109,10 +114,6 @@ app.get('/listing', (req, res)=> {
       res.status(500).json({ message: 'read listings failed' });
     });
 });
-
-const calculateHash = password => crypto.pbkdf2Sync(
-  password, 'secret code', 100, 64, 'sha512'
-).toString('hex');
 
 app.post('/user', (req, res)=> {
   // sign up

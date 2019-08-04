@@ -55,7 +55,7 @@ class MakeListing extends React.Component {
           description: '',
           price: 0,
           images: [],
-        }, ()=> this.props.triggerReload()), 2000);
+        }, this.props.triggerReload), 2000);
       });
   }
 
