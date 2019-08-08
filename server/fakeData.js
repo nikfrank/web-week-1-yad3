@@ -16,22 +16,47 @@ const images = [
 
 const calculateHash = require('./hash');
 
+const places = [
+  'Downtown',
+  'Uptown',
+  'Yaletown',
+  'West Village',
+  'Beachfront',
+  'English Bay',
+  'Jericho Beach',
+  'East Hastings',
+];
+
+const houses = [
+  'Luxury Apartment',
+  'Apartment',
+  'Garden Apartment',
+  'Private House',
+  'Penthouse Suite',
+  'Basement Dwelling (including chicken wings)',
+  'Basement Dwelling (not including chicken wings)',
+];
+
 module.exports = {
   listings: [...Array(50)].map((o, i)=> ({
-    title: 'Nice House '+i,
+    title: (
+      places[ Math.floor( Math.random()*places.length ) ]+
+      ', '+
+      houses[ Math.floor( Math.random()*houses.length ) ]
+    ),
     description: 'look at this house yo '+i,
     price: 1000 + Math.floor( Math.random()*500*i ),
-    images: [
-      images[ Math.floor( Math.random()*images.length ) ],
-      images[ Math.floor( Math.random()*images.length ) ],
-    ],
+
+    images: [...Array( Math.floor(Math.random()*8) + 2 )].map(()=>
+      images[ Math.floor( Math.random()*images.length ) ]
+    ),
     author: (i % 4) + 1,
   }) ),
 
   users: [
-    { email: 'nik@nik.nik', passwordHash: calculateHash('guest') },
-    { email: 'avi@nik.nik', passwordHash: calculateHash('guest') },
-    { email: 'dave@nik.nik', passwordHash: calculateHash('guest') },
-    { email: 'raph@nik.nik', passwordHash: calculateHash('guest') },
+    { email: 'nik@nik.nik', passwordHash: calculateHash('guest'), role: 'admin' },
+    { email: 'avi@nik.nik', passwordHash: calculateHash('guest'), role: 'student' },
+    { email: 'dave@nik.nik', passwordHash: calculateHash('guest'), role: 'ukranian' },
+    { email: 'raph@nik.nik', passwordHash: calculateHash('guest'), role: 'student' },
   ],
 };

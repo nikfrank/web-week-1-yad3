@@ -1,0 +1,72 @@
+.ListingDetail {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.ListingDetail h2 {
+  margin-top: 0;
+}
+
+.detail-image {
+  background-color: #cccccc;
+  height: 40vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail-image .arrow-left,
+.detail-image .arrow-right {
+  height: 100%;
+  width: 60px;
+
+  font-size: 5rem;
+
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  padding: 0 5px;
+
+  user-select: none;
+}
+
+.detail-image .arrow-left:hover {
+  background: linear-gradient(to left, #3330, #3335);
+}
+
+.detail-image .arrow-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.detail-image .arrow-right:hover {
+  background: linear-gradient(to right, #3330, #3335);
+}
+
+
+.thumbnail-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.thumbnail {
+  background-color: #cccccc;
+  height: 100px;
+  width: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  margin: 4px;
+
+  cursor: pointer;
+}
+
+.thumbnail.selected {
+  box-shadow: 0 0 6px #888, 0 0 12px #cccc;
+}

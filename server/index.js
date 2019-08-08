@@ -59,6 +59,10 @@ const User = connection.define('user', {
     allowNull: false,
     unique: true,
   },
+  role: {
+    type: ORM.TEXT,
+    allowNull: false,
+  },
 }, { freezeTableName: true });
 
 app.use( express.json() );
@@ -77,6 +81,9 @@ const auth = (req, res, next)=>{
   });
 };
 
+const adminMiddleware = (req, res, next)=>
+  req.session.role === 'admin' ? next() : res.status(403).json({ message: 'PROHIBIDO' });
+
 connection.authenticate()
   .then(()=> console.log('success'))
   .catch(()=> console.log('failure'));
@@ -92,6 +99,8 @@ app.get('/hydrate', (req, res)=> {
         res.status(500).json({ message: 'failed to create table' });
       });
 });
+
+app.get('/checkAdmin', [auth, adminMiddleware], (req, res)=> res.json({ message: 'admin' }));
 
 app.post('/listing', auth, (req, res)=> {
   Listing.create({ ...req.body, author: req.session.id })
@@ -115,6 +124,13 @@ app.get('/listing', (req, res)=> {
     });
 });
 
+app.get('/listing/:id',(req,res)=>{
+    Listing.findByPk(1*req.params.id) // select one listing in the listing table by id
+        .then(listing => res.json(listing)) //object with the dataValue
+        .catch(err => console.error(err)||res.status(500).json({message:'read listing failed'})) //error
+
+});
+
 app.post('/user', (req, res)=> {
   // sign up
   const passwordHash = calculateHash( req.body.password );
@@ -135,7 +151,7 @@ app.post('/login', (req, res)=> {
         if( userResponse ){
           // make jwt
           jwt.sign(
-            { id: userResponse.dataValues.id },
+            { id: userResponse.dataValues.id, role: userResponse.dataValues.role },
             'jwt secret code',
             (err, token)=> res.json({ token })
           );

@@ -64,7 +64,11 @@ class MakeListing extends React.Component {
 
   render(){
     return (
-      <div className={'MakeListing '+(this.state.showWaitingGif ? 'waiting' : '')}>
+      <div className={
+          'MakeListing '+
+          (this.state.showWaitingGif ? ' waiting ' : '')+
+          (this.state.panelOpen ? '' : ' closed ')
+        }>
         <img src='https://media1.giphy.com/media/12kGB0hjXATilW/giphy.gif' />
         <label>
           <span>Title</span>

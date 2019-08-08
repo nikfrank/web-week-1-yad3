@@ -1,18 +1,86 @@
-.App {
+.App{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  height: 100vh;
+  padding-top: 80px;
+
+  height: calc(100vh - 80px);
+}
+
+.App .content {
+  height: calc(100vh - 80px);
+}
+
+.App .content div {
+  transition: height 1s;
+}
+
+.Navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+
+  background-color: dodgerblue;
+}
+
+.admin-link {
+  position: fixed;
+  top: 10px;
+  right: 100px;
+}
+
+.toggle-panel {
+  position: absolute;
+
+  top: 10px;
+  right: 20px;
+  background-color: blue;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+
+  color: white;
+  text-align: center;
+  font-size: 3rem;
+
+  cursor: pointer;
+  user-select: none;
+  transform: rotate(0);
+  transition: transform 1s;
+}
+
+.toggle-panel.reversed {
+  transform: rotate( -180deg );
+}
+
+.search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 90px;
+  height: 50px;
+
+  display: flex;
+  justify-content: space-around;
+
+  background-color: white;
 }
 
 ul {
   list-style: none;
+  padding-top: 80px;
+  margin: 0;
+  height: calc(100% - 80px);
+
+  overflow-y: auto;
 }
 
 .Listings {
-  height: 60vh;
-  overflow-y: auto;
+  height: 100%;
+  position: relative;
 }
 
 .listing {
@@ -53,7 +121,7 @@ ul {
 
 
 .MakeListing, .Login {
-  height: calc(40vh - 2px);
+  height: calc(100% - 2px);
   width: 100vw;
   background-color: #ccc;
   border-top: 2px dashed black;
@@ -62,7 +130,11 @@ ul {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
+  position: relative;
+  overflow-y: auto;
 }
+
 
 .MakeListing label, .Login label {
   width: 80%;
