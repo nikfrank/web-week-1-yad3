@@ -65,6 +65,30 @@ const User = connection.define('user', {
   },
 }, { freezeTableName: true });
 
+const Order = connection.define('order', {
+  id: {
+    type: ORM.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  listings: {
+    type: ORM.ARRAY( ORM.INTEGER ),
+    allowNull: false
+    references: {
+      model: 'listing',
+      key: 'id',
+    },
+  },
+  purchaser: {
+    type: ORM.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'user',
+      key: 'id',
+    },
+  },
+}, { freezeTableName: true })
+
 app.use( express.json() );
 
 const auth = (req, res, next)=>{
@@ -93,6 +117,7 @@ app.get('/hydrate', (req, res)=> {
       .then(()=> User.bulkCreate(fakeData.users))
       .then(()=> Listing.sync({ force: true }))
       .then(()=> Listing.bulkCreate(fakeData.listings))
+      .then(()=> Order.sync({ force: true }))
       .then(()=> res.json({ message: 'successfully created tables' }))
       .catch(err=> {
         console.error(err);
@@ -101,6 +126,10 @@ app.get('/hydrate', (req, res)=> {
 });
 
 app.get('/checkAdmin', [auth, adminMiddleware], (req, res)=> res.json({ message: 'admin' }));
+
+
+//app.get('/order', )
+
 
 app.post('/listing', auth, (req, res)=> {
   Listing.create({ ...req.body, author: req.session.id })

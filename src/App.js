@@ -5,6 +5,11 @@ import MakeListing from './MakeListing';
 import Listings from './Listings';
 import Login from './Login';
 import ListingDetail from './ListingDetail';
+import Checkout from './Checkout';
+
+import ShoppingCartIcon from './ShoppingCartIcon';
+
+import { subscribe } from './shoppingCart';
 
 import {
   BrowserRouter as Router,
@@ -16,11 +21,26 @@ import {
 
 
 class Navbar extends React.Component {
+
+  state = {
+    shoppingCartLength: 0,
+  }
+
+  componentDidMount(){
+    subscribe('items', items =>
+      this.setState({ shoppingCartLength: items.length }));
+  }
+
   render(){
     return (
       <div className='Navbar'>
         <Link to='/'>
           <h1>YAD3</h1>
+        </Link>
+
+        <Link to='/checkout'>
+          <ShoppingCartIcon className='ShoppingCartIcon'
+                            number={this.state.shoppingCartLength} />
         </Link>
       </div>
     );
@@ -89,6 +109,7 @@ class App extends React.Component {
                     <Listings listings={this.state.listings}/>
                   )}/>
                 <Route exact path='/listing/:id' component={ListingDetail} />
+                <Route exact path='/checkout' component={Checkout} />
 
                 {this.state.isAdmin ? (
                   <Route exact path='/admin' component={AdminPage} />

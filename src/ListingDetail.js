@@ -1,6 +1,8 @@
 import React from 'react';
 import './ListingDetail.css';
 
+import { publish, getValue } from './shoppingCart';
+
 class ListingDetail extends React.Component {
   state = {
     listing: null,
@@ -11,6 +13,16 @@ class ListingDetail extends React.Component {
     fetch('/listing/' + this.props.match.params.id)
       .then(response => response.json())
       .then(listing => this.setState({ listing }));
+  }
+
+  addToCart = ()=> {
+    const currentCartItems = getValue('items') || [];
+
+    publish('items', [...currentCartItems, {
+      id: this.state.listing.id,
+      title: this.state.listing.title,
+      price: this.state.listing.price,
+    } ]);
   }
 
   selectImage = index => this.setState({ selectedImage: index })
@@ -53,6 +65,8 @@ class ListingDetail extends React.Component {
         </div>
 
         <p>{listing.description}</p>
+
+        <button onClick={this.addToCart}>ADD TO CART</button>
       </div>
     );
   }

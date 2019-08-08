@@ -1,4 +1,4 @@
-.App{
+.App {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,6 +24,15 @@
   height: 80px;
 
   background-color: dodgerblue;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Navbar .ShoppingCartIcon {
+  height: 50px;
+  width: 50px;
 }
 
 .admin-link {
@@ -69,7 +78,7 @@
   background-color: white;
 }
 
-ul {
+.Listings ul {
   list-style: none;
   padding-top: 80px;
   margin: 0;
